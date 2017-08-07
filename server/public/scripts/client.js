@@ -1,10 +1,21 @@
-console.log( 'js' );
+console.log('js');
 
-$( document ).ready( function(){
-  console.log( 'JQ' );
-  getJokes();
-  $( '#addJokeButton' ).on( 'click', function(){
-    console.log( 'addJokeButton on click');
+$(document).ready(function () {
+  console.log('JQ');
+  $.ajax({
+    method: 'GET',
+    url: '/jokes',
+    success: function (response) {
+      console.log(response);
+      $('#outputDiv').empty();
+      for (var i = 0; i < response.length; i++) {
+        var joke = response[i];
+        $('#outputDiv').append('<div>' + joke.whoseJoke + ' : ' + joke.jokeQuestion + ' | ' + joke.punchLine + '</div>');
+      }
+    }
+  });
+  $('#addJokeButton').on('click', function () {
+    console.log('addJokeButton on click');
     $.ajax({
       method: 'POST',
       url: '/jokes',
@@ -13,29 +24,21 @@ $( document ).ready( function(){
         jokeQuestion: $('#questionIn').val(),
         punchLine: $('#punchlineIn').val()
       },
-      success: function(response) {
+      success: function (response) {
         console.log(response);
-        getJokes();
+        $.ajax({
+          method: 'GET',
+          url: '/jokes',
+          success: function (response) {
+            console.log(response);
+            $('#outputDiv').empty();
+            for (var i = 0; i < response.length; i++) {
+              var joke = response[i];
+              $('#outputDiv').append('<div>' + joke.whoseJoke + ' : ' + joke.jokeQuestion + ' | ' + joke.punchLine + '</div>');
+            }
+          }
+        });
       }
     });
   }); // end addJokeButton on click
 }); // end doc ready
-
-function getJokes() {
-  $.ajax({
-    method: 'GET',
-    url: '/jokes',
-    success: function(response) {
-      console.log(response);
-      displayJokesOnDOM(response);
-    }
-  });
-}
-
-function displayJokesOnDOM(jokesArray) {
-  $('#outputDiv').empty();
-  for (var i = 0; i < jokesArray.length; i++) {
-    var joke = jokesArray[i];
-    $('#outputDiv').append('<div>' + joke.whoseJoke + ' : ' + joke.jokeQuestion + ' | ' + joke.punchLine + '</div>');
-  }
-}
