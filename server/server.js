@@ -40,6 +40,10 @@ var jokes = [
   }
 ];
 
+app.get('/jokes', function(req, res){
+  res.send(jokes);
+});
+
 // spinning up the server
 app.listen(port, function () {
   console.log('server up on port: ', port);

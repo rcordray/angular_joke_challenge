@@ -32,3 +32,10 @@ Overview
 * the user should be able to add jokes using the input form
 
 Remember to work in small increments and test often. If you want to take things further, first push the working basic mode to your github and update it after.
+
+## ToDo List
+
+- [x] Create ajax get request to return all jokes
+- [ ] Display jokes on the DOM
+- [ ] Post new joke to the server
+- [ ] Display new joke on the DOM
