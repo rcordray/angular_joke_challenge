@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>JEN Stack Code Challenge</title>
-    <script src="vendors/jquery.min.js" charset="utf-8"></script>
+    <script src="vendors/angular.min.js" charset="utf-8"></script>
     <script src="scripts/client.js" charset="utf-8"></script>
-  </head>
-  <body>
+</head>
+
+<body ng-app="JokeApp" ng-controller="JokeController as vm">
     <h1>JEN Stack Code Challenge</h1>
-    <input type='text' id='whoseJokeIn' placeholder='whose joke' />
-    <input type='text' id='questionIn' placeholder='question' />
-    <input type='text' id='punchlineIn' placeholder='punchline' />
-    <button id='addJokeButton'>Add Joke</button>
+    <input type='text' id='whoseJokeIn' ng-model="vm.newJoke.author" placeholder='whose joke' />
+    <input type='text' id='questionIn' ng-model="vm.newJoke.joke" placeholder='question' />
+    <input type='text' id='punchlineIn' ng-model="vm.newJoke.punchline" placeholder='punchline' />
+    <button id='addJokeButton' ng-click="vm.postNewJoke()">Add Joke</button>
     <h2>Jokes:</h2>
     <div id='outputDiv'>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Joke</th>
+                    <th>Punchline</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="jokes in vm.jokesArray">
+                    <td>{{jokes.author}}</td>
+                    <td>{{jokes.joke}}</td>
+                    <td>{{jokes.punchline}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-  </body>
+</body>
+
 </html>
